@@ -1,5 +1,5 @@
 import React ,{useState}from "react";
-
+import { useTasks } from './TaskContext';
 
 const tasksData = [
     { id: 1, title: 'Finish React project', status: 'Pending', priority: 'High' },
@@ -10,10 +10,10 @@ const tasksData = [
   ];
 
   const TaskList:React.FC=()=> {
-    const [tasks, setTasks] = useState(tasksData);
+    //const [tasks, setTasks] = useState(tasksData);
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('All');
-  
+    const { tasks ,updateTaskStatus ,deleteTask } = useTasks();
     // Filter tasks based on search query and status
     const filteredTasks = tasks.filter((task) => {
       const matchesTitle = task.title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -22,7 +22,7 @@ const tasksData = [
   
       return matchesTitle && matchesStatus;
     });
-  
+    
     return (
       <div>
         <h1>Task List</h1>
@@ -55,6 +55,8 @@ const tasksData = [
               <th>Task Title</th>
               <th>Status</th>
               <th>Priority</th>
+              <th>Update Status</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -64,6 +66,14 @@ const tasksData = [
                 <td>{task.title}</td>
                 <td>{task.status}</td>
                 <td>{task.priority}</td>
+                <td>{task.status === 'Pending' && (
+                <button onClick={() => updateTaskStatus(task.id)}>
+                  Mark as Completed
+                </button>
+              )}</td>
+              <td><button onClick={() => deleteTask(task.id)} style={{ marginLeft: '10px' }}>
+                Delete
+              </button></td>
               </tr>
             ))}
           </tbody>

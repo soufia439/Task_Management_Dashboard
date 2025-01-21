@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTasks } from './TaskContext';
+import './TaskForm.css'; 
 
 function TaskForm() {
   const { addTask } = useTasks();
@@ -42,7 +43,7 @@ function TaskForm() {
   };
 
   return (
-    <div>
+    <div  className="task-form-container">
       <h2>Add New Task</h2>
       {notification && <div style={{ color: 'green', marginBottom: '10px' }}>{notification}</div>}
       
